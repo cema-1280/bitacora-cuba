@@ -1,0 +1,983 @@
+/* ==========================================
+   Bitácora Cuba Offline - Estilos
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --azul: #1e40af;
+    --azul-claro: #3b82f6;
+    --gris-fondo: #f3f4f6;
+    --gris-borde: #e5e7eb;
+    --texto: #111827;
+    --texto-suave: #6b7280;
+    --blanco: #ffffff;
+    --verde: #10b981;
+    --rojo: #ef4444;
+    --amarillo: #f59e0b;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto);
+    max-width: 500px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Barra superior ---------- */
+.app-header {
+    background: var(--azul);
+    color: var(--blanco);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.app-header h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.badge-offline {
+    font-size: 12px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.badge-offline.online {
+    background: var(--verde);
+}
+
+/* ---------- Contenido principal ---------- */
+.app-main {
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 90px;
+    overflow-y: auto;
+}
+
+.seccion {
+    display: none;
+}
+
+.seccion.activa {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.seccion h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.subtitulo {
+    color: var(--texto-suave);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* ---------- Tarjeta de resumen ---------- */
+.tarjeta-resumen {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.resumen-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.resumen-numero {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--azul);
+}
+
+.resumen-etiqueta {
+    font-size: 11px;
+    color: var(--texto-suave);
+    text-align: center;
+}
+
+/* ---------- Botones ---------- */
+.boton-principal {
+    width: 100%;
+    padding: 14px;
+    background: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+}
+
+.boton-principal:hover {
+    background: var(--azul-claro);
+}
+
+.boton-secundario {
+    width: 100%;
+    padding: 14px;
+    background: var(--blanco);
+    color: var(--azul);
+    border: 2px solid var(--azul);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+}
+
+.boton-secundario:hover {
+    background: var(--azul);
+    color: var(--blanco);
+}
+
+/* ---------- Lista vacía ---------- */
+.lista-vacia {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--texto-suave);
+    font-size: 14px;
+    background: var(--blanco);
+    border-radius: 12px;
+    border: 2px dashed var(--gris-borde);
+}
+
+/* ---------- Lista de actividades ---------- */
+.actividad-item {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--azul);
+}
+
+.actividad-item.terreno {
+    border-left-color: var(--verde);
+}
+
+.actividad-item.remoto {
+    border-left-color: var(--amarillo);
+}
+
+.actividad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.actividad-fecha {
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
+.actividad-tipo {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.actividad-tipo.terreno {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.actividad-tipo.remoto {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.actividad-componente {
+    font-size: 13px;
+    color: var(--azul);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.actividad-tema {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.actividad-participantes {
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-bottom: 8px;
+}
+
+.actividad-resultados {
+    font-size: 13px;
+    color: var(--texto);
+    line-height: 1.4;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    color: var(--rojo);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+/* ---------- Barra de navegación inferior ---------- */
+.app-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--blanco);
+    border-top: 1px solid var(--gris-borde);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    color: var(--texto-suave);
+    transition: color 0.2s;
+}
+
+.nav-item.activo {
+    color: var(--azul);
+}
+
+.nav-icono {
+    font-size: 20px;
+}
+
+.nav-texto {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ---------- Modal del formulario ---------- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal.oculto {
+    display: none;
+}
+
+.modal-contenido {
+    background: var(--blanco);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    color: var(--azul);
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--texto-suave);
+    padding: 4px 8px;
+}
+
+/* ---------- Formulario ---------- */
+form label {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--texto);
+    background: var(--blanco);
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* ---------- Radio terreno/remoto ---------- */
+.grupo-radio {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.opcion-radio {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border: 2px solid var(--gris-borde);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 0;
+    transition: all 0.2s;
+}
+
+.opcion-radio input {
+    display: none;
+}
+
+.opcion-radio:has(input:checked) {
+    border-color: var(--azul);
+    background: #eff6ff;
+    color: var(--azul);
+}
+
+/* ---------- Acciones del modal ---------- */
+.modal-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gris-borde);
+}
+
+.modal-acciones button {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+   FASE 3: Módulo de GASTOS
+   ========================================== */
+
+/* Tarjeta del total en euros */
+.tarjeta-total-eur {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: var(--blanco);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+}
+
+.total-etiqueta {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+.total-numero {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Tarjeta de desglose por moneda */
+.tarjeta-desglose {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.desglose-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--gris-borde);
+}
+
+.desglose-item:last-child,
+.desglose-item:nth-last-child(2):nth-child(odd) {
+    border-bottom: none;
+}
+
+.desglose-moneda {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+}
+
+.desglose-valor {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+/* Fila doble (Monto + Moneda) */
+.fila-doble {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+}
+
+/* Ayuda de tasa de cambio */
+.ayuda-tasa {
+    display: block;
+    font-size: 11px;
+    color: var(--texto-suave);
+    font-weight: 400;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* Vista previa de conversión */
+.vista-previa-conversion {
+    background: #eff6ff;
+    border-left: 4px solid var(--azul);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--texto);
+}
+
+.vista-previa-conversion strong {
+    color: var(--azul);
+    font-size: 16px;
+}
+
+/* Select en formularios */
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--texto);
+    background: var(--blanco);
+    cursor: pointer;
+}
+
+form select:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+/* Tarjeta de gasto en la lista */
+.gasto-item {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--azul);
+}
+
+.gasto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.gasto-fecha {
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
+.gasto-categoria {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.gasto-categoria.transporte {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.gasto-categoria.alojamiento {
+    background: #fce7f3;
+    color: #9d174d;
+}
+
+.gasto-categoria.comida {
+    background: #fed7aa;
+    color: #9a3412;
+}
+
+.gasto-categoria.materiales {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.gasto-categoria.comunicaciones {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.gasto-categoria.otros {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.gasto-concepto {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.gasto-montos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px dashed var(--gris-borde);
+}
+
+.gasto-original {
+    font-size: 13px;
+    color: var(--texto-suave);
+}
+
+.gasto-equivalente {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--azul);
+}
+
+.gasto-tasa {
+    font-size: 10px;
+    color: var(--texto-suave);
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.gasto-comprobante {
+    font-size: 11px;
+    color: var(--texto-suave);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gasto-comprobante.si {
+    color: var(--verde);
+}
+
+.gasto-comprobante.no {
+    color: var(--rojo);
+}
+
+/* Ciudad en las tarjetas de actividad */
+.actividad-ciudad {
+    font-size: 12px;
+    color: var(--texto-suave);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Badge de medio día */
+.actividad-jornada {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #fef3c7;
+    color: #92400e;
+    margin-left: 4px;
+}
+
+/* ==========================================
+   FASE 4: Módulo de REPORTES
+   ========================================== */
+
+/* Tarjeta de avance general */
+.tarjeta-avance {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: var(--blanco);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+}
+
+.avance-titulo {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.avance-numero {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.avance-numero span {
+    font-size: 42px;
+}
+
+.barra-progreso {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.barra-progreso-relleno {
+    height: 100%;
+    background: var(--blanco);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.avance-detalle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* Tarjeta de corte de mes */
+.tarjeta-corte {
+    background: #fef3c7;
+    border-left: 4px solid var(--amarillo);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.corte-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #92400e;
+    margin-bottom: 8px;
+}
+
+.corte-fecha {
+    font-size: 20px;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 4px;
+}
+
+.corte-restantes {
+    font-size: 13px;
+    color: #b45309;
+}
+
+/* Tabla del Briefing */
+.tarjeta-tabla-briefing {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-scroll {
+    overflow-x: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gris-borde);
+}
+
+.tabla-briefing {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 600px;
+}
+
+.tabla-briefing thead {
+    background: var(--gris-fondo);
+}
+
+.tabla-briefing th {
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    border-bottom: 2px solid var(--gris-borde);
+    white-space: nowrap;
+}
+
+.tabla-briefing td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--gris-borde);
+    color: var(--texto);
+    vertical-align: top;
+}
+
+.tabla-briefing tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-briefing tr:hover {
+    background: #f9fafb;
+}
+
+.tabla-vacia {
+    text-align: center;
+    padding: 30px 10px !important;
+    color: var(--texto-suave);
+    font-style: italic;
+}
+
+/* Tarjeta de exportación */
+.tarjeta-exportacion {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tarjeta-exportacion .boton-secundario {
+    margin-top: 8px;
+}
+
+/* Título de secciones internas */
+.resumen-titulo {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--texto-suave);
+    margin-bottom: 4px;
+}
+
+/* Modal rango de fechas */
+.modal-descripcion {
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+/* ==========================================
+   FASE 5: MÓDULO DE CONTRATO
+   ========================================== */
+
+.tarjeta-config {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tarjeta-config label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 12px;
+}
+
+.tarjeta-config input,
+.tarjeta-config textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--texto);
+    background: var(--blanco);
+}
+
+.tarjeta-config input:focus,
+.tarjeta-config textarea:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.tarjeta-config textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Cálculos automáticos */
+.config-calculo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #eff6ff;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--texto);
+}
+
+.config-calculo strong {
+    color: var(--azul);
+    font-size: 15px;
+}
+
+/* Ítems dinámicos (informes, tareas, viajes) */
+.config-item {
+    background: var(--gris-fondo);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.config-item-info {
+    flex: 1;
+}
+
+.config-item-titulo {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--texto);
+    margin-bottom: 4px;
+}
+
+.config-item-detalle {
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
+.config-item .btn-eliminar {
+    background: none;
+    border: none;
+    color: var(--rojo);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
