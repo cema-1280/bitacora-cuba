@@ -11,6 +11,18 @@
 </head>
 
 <body>
+    <!-- PANTALLA DE CONTRASEÑA -->
+    <div id="pantallaLogin" class="login-overlay">
+        <div class="login-contenedor">
+            <div class="login-icono">🔒</div>
+            <h2>Bitácora Cuba</h2>
+            <p class="login-subtitulo">Ingresa tu contraseña para continuar</p>
+            <input type="password" id="inputPassword" placeholder="Contraseña" autocomplete="off">
+            <button class="boton-principal" id="btnLogin">Entrar</button>
+            <p class="login-error" id="loginError"></p>
+        </div>
+    </div>
+
     <header class="app-header">
         <h1>Bitácora Cuba</h1>
         <span class="badge-offline" id="estadoRed">● Offline</span>
@@ -148,6 +160,8 @@
                     (CSV)</button>
                 <button class="boton-secundario" id="btnExportarAgente">📝 Exportar para Agente (JSON)</button>
                 <button class="boton-secundario" id="btnCrearRespaldo">💾 Crear respaldo completo (JSON)</button>
+                <button class="boton-secundario" id="btnImportarRespaldo">📥 Importar respaldo (JSON)</button>
+                <input type="file" id="inputImportar" accept=".json" style="display: none;">
             </div>
 
             <!-- MODAL PARA RANGO DE FECHAS DEL AGENTE -->

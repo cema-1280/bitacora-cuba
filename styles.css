@@ -981,3 +981,76 @@ form select:focus {
     cursor: pointer;
     padding: 4px 8px;
 }
+
+/* ==========================================
+   PANTALLA DE CONTRASEÑA
+   ========================================== */
+
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gris-fondo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.login-overlay.oculto {
+    display: none;
+}
+
+.login-contenedor {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 30px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.login-icono {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.login-contenedor h2 {
+    font-size: 22px;
+    color: var(--texto);
+    margin-bottom: 8px;
+}
+
+.login-subtitulo {
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-bottom: 24px;
+}
+
+.login-contenedor input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--gris-borde);
+    border-radius: 10px;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+    font-family: inherit;
+}
+
+.login-contenedor input:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.login-error {
+    color: var(--rojo);
+    font-size: 13px;
+    margin-top: 12px;
+    min-height: 18px;
+}

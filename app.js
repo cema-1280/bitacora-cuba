@@ -1168,3 +1168,182 @@ if (document.readyState === 'loading') {
 } else {
     inicializarModuloContrato();
 }
+// ==========================================
+// PANTALLA DE CONTRASEÑA
+// ==========================================
+
+// ⚠️ CAMBIA ESTO POR TU CONTRASEÑA REAL
+const CONTRASEÑA_CORRECTA = 'Cuba220';
+
+function inicializarLogin() {
+    const pantalla = document.getElementById('pantallaLogin');
+    const input = document.getElementById('inputPassword');
+    const btn = document.getElementById('btnLogin');
+    const error = document.getElementById('loginError');
+
+    // Si ya se autenticó antes, ocultar la pantalla
+    if (localStorage.getItem('autenticado') === 'si') {
+        pantalla.classList.add('oculto');
+        return;
+    }
+
+    // Verificar contraseña
+    function verificar() {
+        const ingresada = input.value.trim();
+        if (ingresada === CONTRASEÑA_CORRECTA) {
+            localStorage.setItem('autenticado', 'si');
+            pantalla.classList.add('oculto');
+            error.textContent = '';
+        } else {
+            error.textContent = '❌ Contraseña incorrecta';
+            input.value = '';
+            input.focus();
+        }
+    }
+
+    // Click en botón
+    btn.addEventListener('click', verificar);
+
+    // Presionar Enter
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            verificar();
+        }
+    });
+
+    // Enfocar el input al cargar
+    input.focus();
+}
+
+// Ejecutar cuando cargue el DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarLogin);
+} else {
+    inicializarLogin();
+}
+// ==========================================
+// IMPORTAR RESPALDO
+// ==========================================
+
+function inicializarImportacion() {
+    const btnImportar = document.getElementById('btnImportarRespaldo');
+    const inputArchivo = document.getElementById('inputImportar');
+
+    // Botón: abrir el selector de archivos
+    btnImportar.addEventListener('click', () => {
+        inputArchivo.click();
+    });
+
+    // Cuando se selecciona un archivo
+    inputArchivo.addEventListener('change', async (evento) => {
+        const archivo = evento.target.files[0];
+        if (!archivo) return;
+
+        try {
+            // Leer el archivo
+            const texto = await archivo.text();
+            const datos = JSON.parse(texto);
+
+            // Validar que tenga la estructura correcta
+            if (!datos.actividades && !datos.gastos) {
+                alert('❌ El archivo no tiene el formato correcto.');
+                inputArchivo.value = '';
+                return;
+            }
+
+            // Contar elementos
+            const numActividades = (datos.actividades || []).length;
+            const numGastos = (datos.gastos || []).length;
+
+            // Confirmar con el usuario
+            const respuesta = confirm(
+                `📦 Archivo válido detectado:\n\n` +
+                `• ${numActividades} actividades\n` +
+                `• ${numGastos} gastos\n\n` +
+                `¿CÓMO QUIERES IMPORTAR?\n\n` +
+                `• ACEPTAR → Agregar (sin borrar los datos actuales)\n` +
+                `• CANCELAR → Reemplazar (borrar todo y poner solo esto)`
+            );
+
+            if (respuesta === true) {
+                // ACEPTAR → Agregar
+                await importarAgregar(datos);
+                alert(`✅ Importados: ${numActividades} actividades y ${numGastos} gastos (modo AGREGAR).`);
+            } else {
+                // CANCELAR → Reemplazar
+                const confirmar = confirm(
+                    `⚠️ ATENCIÓN:\n\n` +
+                    `Se van a BORRAR todos los datos actuales y reemplazarlos por los del archivo.\n\n` +
+                    `¿Estás segura?`
+                );
+                if (confirmar) {
+                    await importarReemplazar(datos);
+                    alert(`✅ Importados: ${numActividades} actividades y ${numGastos} gastos (modo REEMPLAZAR).`);
+                } else {
+                    return; // Cancelar todo
+                }
+            }
+
+            // Recargar la interfaz
+            await cargarActividades();
+            await cargarGastos();
+            await cargarConfiguracion();
+
+            // Limpiar el input
+            inputArchivo.value = '';
+
+            console.log('✅ Importación completada');
+
+        } catch (error) {
+            console.error('❌ Error al importar:', error);
+            alert('❌ Hubo un error al leer el archivo. Verifica que sea un JSON válido.');
+            inputArchivo.value = '';
+        }
+    });
+}
+
+// Modo AGREGAR: mantiene los datos actuales y añade los nuevos
+async function importarAgregar(datos) {
+    // Agregar actividades (sin el id, para que IndexedDB genere uno nuevo)
+    if (datos.actividades) {
+        for (const actividad of datos.actividades) {
+            const copia = { ...actividad };
+            delete copia.id; // Quitar el id para que se genere uno nuevo
+            await guardarActividad(copia);
+        }
+    }
+
+    // Agregar gastos
+    if (datos.gastos) {
+        for (const gasto of datos.gastos) {
+            const copia = { ...gasto };
+            delete copia.id;
+            await guardarGasto(copia);
+        }
+    }
+}
+
+// Modo REEMPLAZAR: borra todo y pone solo los datos del archivo
+async function importarReemplazar(datos) {
+    // Borrar todas las actividades actuales
+    const actividadesActuales = await obtenerActividades();
+    for (const act of actividadesActuales) {
+        await eliminarActividad(act.id);
+    }
+
+    // Borrar todos los gastos actuales
+    const gastosActuales = await obtenerGastos();
+    for (const g of gastosActuales) {
+        await eliminarGasto(g.id);
+    }
+
+    // Agregar los nuevos
+    await importarAgregar(datos);
+}
+
+// Ejecutar al cargar el DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarImportacion);
+} else {
+    inicializarImportacion();
+}
