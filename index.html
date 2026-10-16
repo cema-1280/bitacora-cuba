@@ -83,13 +83,16 @@
                     <span class="desglose-moneda">CUP</span>
                     <span class="desglose-valor" id="totalMonedaCUP">0.00</span>
                 </div>
-            </div>
+                <div class="desglose-item">
+                    <span class="desglose-moneda">COP</span>
+                    <span class="desglose-valor" id="totalMonedaCOP">0.00</span>
+                </div>
 
-            <button class="boton-principal" id="btnNuevoGasto">+ Nuevo gasto</button>
+                <button class="boton-principal" id="btnNuevoGasto">+ Nuevo gasto</button>
 
-            <div id="listaGastos" class="lista-vacia">
-                <p>No hay gastos registrados.</p>
-            </div>
+                <div id="listaGastos" class="lista-vacia">
+                    <p>No hay gastos registrados.</p>
+                </div>
         </section>
 
         <!-- SECCIÓN VIAJES -->
@@ -396,9 +399,11 @@
                         <input type="number" id="gastoMonto" step="0.01" min="0" placeholder="0.00" required>
                     </label>
 
+
                     <label>Moneda
                         <select id="gastoMoneda" required>
-                            <option value="CUP">CUP</option>
+                            <option value="COP">COP - Peso colombiano</option>
+                            <option value="CUP">CUP - Peso cubano</option>
                             <option value="MLC">MLC</option>
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
@@ -407,8 +412,8 @@
                 </div>
 
                 <label>Tasa a EUR (¿cuántos EUR vale 1 unidad?)
-                    <input type="number" id="gasoTasa" step="0.0001" min="0" placeholder="Ej: 0.0364" required>
-                    <small class="ayuda-tasa" id="ayudaTasa">Ejemplo: si 1 EUR = 27.5 CUP, escribe 0.0364</small>
+                    <input type="text" id="gasoTasa" inputmode="decimal" placeholder="Ej: 0.000281" required>
+                    <small class="ayuda-tasa" id="ayudaTasa">Ejemplo: si 1 EUR = 4,500 COP, escribe 0.00022222</small>
                 </label>
 
                 <div class="vista-previa-conversion" id="vistaPrevia">

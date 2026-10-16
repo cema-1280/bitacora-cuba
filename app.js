@@ -431,8 +431,10 @@ function configurarFormularioGasto() {
     campoTasa.addEventListener('input', actualizarVistaPrevia);
 
     function actualizarVistaPrevia() {
-        const monto = parseFloat(campoMonto.value) || 0;
-        const tasa = parseFloat(campoTasa.value) || 0;
+        const montoTexto = (campoMonto.value || '').replace(',', '.');
+        const tasaTexto = (campoTasa.value || '').replace(',', '.');
+        const monto = parseFloat(montoTexto) || 0;
+        const tasa = parseFloat(tasaTexto) || 0;
         const equivalente = monto * tasa;
         vistaPrevia.innerHTML = `Equivalente: <strong>€ ${equivalente.toFixed(2)}</strong>`;
     }
@@ -487,6 +489,7 @@ function guardarUltimaTasa(moneda, tasa) {
 function cargarUltimaTasa(moneda, campoTasa, ayudaTasa) {
     const tasaGuardada = localStorage.getItem(`ultimaTasa_${moneda}`);
     const ejemplos = {
+        'COP': 'Ejemplo: si 1 EUR = 4,500 COP, escribe 0.00022222',
         'CUP': 'Ejemplo: si 1 EUR = 27.5 CUP, escribe 0.0364',
         'MLC': 'Ejemplo: si 1 EUR = 1.08 MLC, escribe 0.9259',
         'USD': 'Ejemplo: si 1 EUR = 1.08 USD, escribe 0.9259',
@@ -575,7 +578,7 @@ function mostrarGastos(gastos) {
 
 function actualizarTotales(gastos) {
     let totalEUR = 0;
-    const totalesPorMoneda = { EUR: 0, USD: 0, MLC: 0, CUP: 0 };
+    const totalesPorMoneda = { EUR: 0, USD: 0, MLC: 0, CUP: 0, COP: 0 };
 
     gastos.forEach(g => {
         totalEUR += g.equivalenteEUR;
@@ -589,6 +592,7 @@ function actualizarTotales(gastos) {
     document.getElementById('totalMonedaUSD').textContent = totalesPorMoneda.USD.toFixed(2);
     document.getElementById('totalMonedaMLC').textContent = totalesPorMoneda.MLC.toFixed(2);
     document.getElementById('totalMonedaCUP').textContent = totalesPorMoneda.CUP.toFixed(2);
+    document.getElementById('totalMonedaCOP').textContent = totalesPorMoneda.COP.toFixed(2);
 }
 
 // ------------------------------------------
@@ -976,7 +980,7 @@ async function exportarStatement() {
             const descripcion = (g.concepto || '').replace(/,/g, ' ');
             const moneda = g.moneda || '';
             const montoFC = (g.monto || 0).toFixed(2);
-            const tasa = (g.tasa || 0).toFixed(4);
+            const tasa = (g.tasa || 0).toFixed(8);
             const montoEUR = (g.equivalenteEUR || 0).toFixed(2);
             const receipt = g.receiptNumber || '';
             const proyecto = g.proyecto || '';
